@@ -24,4 +24,20 @@ small{font-size:12px}
 @media(max-width:680px){.wrap{margin:18px auto}
 table{font-size:12px}
 header{display:block}
+.detail-panel {max-width: 750px;}
+.detail-row {display: grid; grid-template-columns: 150px 1fr; gap: 10px; margin-bottom: 12px; align-items: center;}
+.reference-tag {display: inline-block;width: fit-content;padding: 4px 10px;background: #e6f4ec;color: #267849;border-radius: 6px;}
+.secondary-btn {background: #edf4fc;color: #2875c7;border: 1px solid #d2e2f5;}
+.edit-btn {background: #efa91f;color: #263447;}
+.secondary-btn:hover,
+.edit-btn:hover {opacity: 0.85;}
+.edit-form {max-width: 750px;}
+.edit-form input[readonly] {background: #f5f7fa;color: #43546b;cursor: not-allowed;}
+.form-actions {display: flex;align-items: center;gap: 10px;flex-wrap: wrap;}
+.warning-notice {max-width: 750px;background: #fff6dc;color: #594718;border: 1px solid #f4dfa0;}
+@media(max-width: 680px) {.detail-row {grid-template-columns: 1fr;gap: 3px;}
+    .form-actions {align-items: stretch;}
+    .form-actions button,
+    .form-actions .btn {text-align: center;}
+}
 }
