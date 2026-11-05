@@ -12,3 +12,5 @@ if (!isset($_SESSION['bookings'])) {
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
+$theme = in_array($_COOKIE['theme'] ?? '', ['light', 'dark'], true)
+    ? $_COOKIE['theme'] : 'light';

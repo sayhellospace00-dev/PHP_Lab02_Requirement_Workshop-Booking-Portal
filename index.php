@@ -1,5 +1,5 @@
 <?php
-$workshops = require __DIR__ . '/data/workshops.php';
+require __DIR__ . '/lib/bootstrap.php';
 
 $query = trim((string)($_GET['q'] ?? ''));
 $category = (string)($_GET['category'] ?? 'all');
@@ -33,3 +33,36 @@ $results = array_filter($workshops, static function(array $w) use ($query, $cate
         </article>
     <?php endforeach; ?>
 <?php endif; ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workshop Catalog</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body class="theme-<?= e($theme) ?>">
+<form method="POST" action="preference.php">
+    <input
+        type="hidden"
+        name="csrf_token"
+        value="<?= e($_SESSION['csrf_token']) ?>"
+    >
+
+    <label for="theme">Choose theme:</label>
+
+    <select name="theme" id="theme">
+        <option value="light" <?= $theme === 'light' ? 'selected' : '' ?>>
+            Light
+        </option>
+        <option value="dark" <?= $theme === 'dark' ? 'selected' : '' ?>>
+            Dark
+        </option>
+    </select>
+
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>
