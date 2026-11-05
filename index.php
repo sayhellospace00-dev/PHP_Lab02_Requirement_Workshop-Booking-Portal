@@ -1,4 +1,5 @@
 <?php
-$pageTitle = 'Workshop Booking Portal';
-?>
-<!doctype html><html><body><h1><?= htmlspecialchars($pageTitle) ?></h1></body></html>
+$workshops = require __DIR__ . '/data/workshops.php';
+foreach ($workshops as $item) {
+    echo '<p>' . htmlspecialchars($item['title']) . '</p>';
+}
