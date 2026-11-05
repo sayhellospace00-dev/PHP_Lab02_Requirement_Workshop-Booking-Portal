@@ -11,15 +11,14 @@ function normalize_text(string $text): string {
     return preg_replace('/\s+/u', ' ', $text) ?? $text;
 }
 
-function validate_booking(array $input): array {
+function validate_booking(array $input, array $workshops): array {
     $errors = [];
     $name = normalize_text((string)($input['full_name'] ?? ''));
     $email = trim((string)($input['email'] ?? ''));
-    $qty = filter_var(
-        $input['quantity'] ?? null,
-        FILTER_VALIDATE_INT
-    );
-
+    $workshopId = (string)($input['workshop_id'] ?? '');
+    $qtyRaw = $input['quantity'] ?? null;
+    $qty = filter_var($qtyRaw, FILTER_VALIDATE_INT);
+        
     // Validate name
     if ($name === '') {
         $errors['full_name'] = 'Full name is required.';
@@ -34,13 +33,28 @@ function validate_booking(array $input): array {
         $errors['email'] = 'Invalid email format.';
     }
 
-    // Validate quantity
+    if (!isset($workshops[$workshopId])) {
+        $errors['workshop_id'] = 'Please select an existing workshop.';
+    }
+
     if ($qty === false || $qty < 1 || $qty > 4) {
-        $errors['quantity'] = 'Quantity must be 1 to 4.';
+        $errors['quantity'] = 'Quantity must be an integer from 1 to 4.';
+    } elseif (isset($workshops[$workshopId]) && $qty > $workshops[$workshopId]['seats']) {
+        $errors['quantity'] = 'Not enough seats for this booking.';
     }
 
     return ['errors' => $errors, 'data' => [
             'full_name' => $name, 'email' => $email,
-            'quantity' => $qty === false ? 0 : $qty
+            'workshop_id' => $workshopId, 'quantity' => $qty === false ? 0 : $qty
         ]];
+}
+
+function redirect_to(string $path): never {
+    header('Location: ' . $path, true, 303);
+    exit;
+}
+
+function csrf_valid(array $post): bool {
+    return is_string($post['csrf_token'] ?? null)
+        && hash_equals($_SESSION['csrf_token'] ?? '', $post['csrf_token']);
 }
