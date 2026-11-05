@@ -58,3 +58,42 @@ function csrf_valid(array $post): bool {
     return is_string($post['csrf_token'] ?? null)
         && hash_equals($_SESSION['csrf_token'] ?? '', $post['csrf_token']);
 }
+
+function find_booking_index_by_ref(
+    array $bookings,
+    string $ref
+): ?int {
+    if ($ref === '') {
+        return null;
+    }
+
+    foreach ($bookings as $index => $booking) {
+        if (is_array($booking)
+            && isset($booking['ref'])
+            && $booking['ref'] === $ref) 
+        {
+            return $index;
+        }
+    }
+    return null;
+}
+
+function get_booking_workshop_id(
+    array $booking,
+    array $workshops
+): ?string {
+    $storedId = (string)($booking['workshop_id'] ?? '');
+
+    if ($storedId !== '' && isset($workshops[$storedId])) {
+        return $storedId;
+    }
+
+    $title = (string)($booking['workshop'] ?? '');
+
+    foreach ($workshops as $id => $workshop) {
+        if ($workshop['title'] === $title) {
+            return (string)$id;
+        }
+    }
+    return null;
+}
