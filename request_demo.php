@@ -1,4 +1,6 @@
 <?php
+require __DIR__ . '/lib/bootstrap.php';
+
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $getName = (string)($_GET['name'] ?? '');
 $postName = (string)($_POST['name'] ?? '');
@@ -8,11 +10,12 @@ $requestName = (string)($_REQUEST['name'] ?? '');
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Request Inspector</title>
+<meta charset="utf-8">
+<title>Request Inspector</title>
+<link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
-
+<body class="<?= e($theme) ?>">
+<main class="wrap">
     <h1>Request Inspector</h1>
 
     <p>Method: <?= htmlspecialchars($method) ?></p>

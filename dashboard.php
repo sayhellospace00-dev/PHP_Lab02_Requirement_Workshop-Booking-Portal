@@ -8,12 +8,12 @@ unset($_SESSION['flash']);
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>My bookings</title>
-    <link rel="stylesheet" href="assets/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My bookings</title>
+<link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class="<?= e($theme) ?>">
 <main class="wrap">
 <header>
 <h1>My Bookings</h1>
@@ -75,4 +75,3 @@ unset($_SESSION['flash']);
 </main>
 </body>
 </html>
-
