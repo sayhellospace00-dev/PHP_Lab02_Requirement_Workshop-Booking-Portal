@@ -12,10 +12,13 @@ if ($method === 'POST') {
         $d = $result['data'];
         $w = $workshops[$d['workshop_id']];
         $_SESSION['bookings'][] = [
-            'ref'=> 'BK-' . strtoupper(bin2hex(random_bytes(3))),
-            'full_name'=>$d['full_name'], 'email'=>$d['email'],
-            'workshop'=>$w['title'], 'quantity'=>$d['quantity'],
-            'amount'=>$w['fee'] * $d['quantity']
+            'ref' => 'BK-' . strtoupper(bin2hex(random_bytes(3))),
+            'workshop_id' => $d['workshop_id'],
+            'full_name' => $d['full_name'],
+            'email' => $d['email'],
+            'workshop' => $w['title'],
+            'quantity' => $d['quantity'],
+            'amount' => $w['fee'] * $d['quantity']
         ];
         unset($_SESSION['old_input'], $_SESSION['form_errors']);
         $_SESSION['flash'] = 'Booking saved successfully.';
